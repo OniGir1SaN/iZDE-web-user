@@ -1,22 +1,20 @@
 package iZDE;
 
-import com.demoqa.entities.iZDE.LoginEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.listener.ScreenshotListener;
-import com.demoqa.utils.ConfigReader;
+import com.izde.entities.iZDE.LoginEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.listener.ScreenshotListener;
+import com.izde.utils.ConfigReader;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.qameta.allure.testng.AllureTestNg;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
-import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Epic("iZDE Web")
+@Feature("Авторизация")
 @Listeners({AllureTestNg.class, ScreenshotListener.class})
 public class LoginTest extends BaseTest {
 
@@ -27,20 +25,20 @@ public class LoginTest extends BaseTest {
     }
 
     private void submitFormAndVerifyError(LoginEntity entity, String expectedErrorMessage) {
-        loginPage.fillUpLoginForm(entity);
-        webElementActions.click(loginPage.submitBtn);
+        getLoginPage().fillUpLoginForm(entity);
+        webElementActions.click(getLoginPage().submitBtn);
 
-        String errorMessage = loginPage.getErrorMessage();
+        String errorMessage = getLoginPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains(expectedErrorMessage),
                 "Ожидаемая ошибка: " + expectedErrorMessage + ", получено: " + errorMessage);
         Allure.step("Проверка ошибки: " + expectedErrorMessage);
     }
 
     private void submitFormAndVerifyError2(LoginEntity entity, String expectedErrorMessage) {
-        loginPage.fillUpLoginForm(entity);
-        webElementActions.click(loginPage.submitBtn);
+        getLoginPage().fillUpLoginForm(entity);
+        webElementActions.click(getLoginPage().submitBtn);
 
-        String errorMessage = loginPage.getErrorMessage2();
+        String errorMessage = getLoginPage().getErrorMessage2();
         Assert.assertTrue(errorMessage.contains(expectedErrorMessage),
                 "Ожидаемая ошибка: " + expectedErrorMessage + ", получено: " + errorMessage);
         Allure.step("Проверка ошибки: " + expectedErrorMessage);
@@ -48,7 +46,7 @@ public class LoginTest extends BaseTest {
 
     @Test(groups = "validation")
     public void testLoginPlaceholders() {
-        loginPage.verifyEmailAndPasswordPlaceholders();
+        getLoginPage().verifyEmailAndPasswordPlaceholders();
         Allure.step("Проверка плейсхолдеров полей email и пароля");
     }
 
@@ -103,7 +101,7 @@ public class LoginTest extends BaseTest {
     public void testTextLogin1() {
         String expectedText3 = "Готовы к новым приключениям?";
 
-        Assert.assertTrue(loginPage.isTextLogin1Correct(expectedText3),
+        Assert.assertTrue(getLoginPage().isTextLogin1Correct(expectedText3),
                 "Текст для Login1 не соответствует ожидаемому тексту.");
     }
 
@@ -111,7 +109,7 @@ public class LoginTest extends BaseTest {
     public void testTextLogin2() {
         String expectedText4 = "Войдите и начнем!";
 
-        Assert.assertTrue(loginPage.isTextLogin2Correct(expectedText4),
+        Assert.assertTrue(getLoginPage().isTextLogin2Correct(expectedText4),
                 "Текст для Login2 не соответствует ожидаемому тексту.");
     }
 }

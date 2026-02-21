@@ -1,17 +1,20 @@
 package iZDE;
 
-import com.demoqa.entities.iZDE.LoginEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.enums.iZDE.TextElementsMain;
-import com.demoqa.utils.ConfigReader;
+import com.izde.entities.iZDE.LoginEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.enums.iZDE.TextElementsMain;
+import com.izde.utils.ConfigReader;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
+@Epic("iZDE Web")
+@Feature("Главное меню")
 public class MainMenuTextTest extends BaseTest {
 
     @BeforeClass
@@ -19,7 +22,7 @@ public class MainMenuTextTest extends BaseTest {
         browserHelper.open(ConfigReader.getValue("baseURL") + Endpoints.SIGNIN.getEndpoint());
 
         LoginEntity entity = randomUtils.validLoginEntity();
-        loginPage.fillUpLoginForm(entity);
+        getLoginPage().fillUpLoginForm(entity);
     }
 
     @Test(dataProvider = "textElementsProvider")

@@ -74,6 +74,9 @@ build/
 *.gradle[.kts]
 gradle-app.setting
 
+# Environment variables
+.env
+
 # Temporary and test files
 .cache/
 .pytest_cache/

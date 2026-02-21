@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wallet</groupId>
-    <artifactId>oraclesiebelcrm</artifactId>
+    <groupId>com.izde</groupId>
+    <artifactId>izde-web-tests</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -20,13 +20,13 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.18.1</version>
+            <version>4.28.1</version>
         </dependency>
         <!-- TestNG Dependency -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.9.0</version>
+            <version>7.10.2</version>
         </dependency>
         <!-- Lombok Dependency -->
         <dependency>
@@ -60,12 +60,6 @@
             <version>1.9.19</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- Cucumber Java Dependency -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>7.1.0</version>
-        </dependency>
         <!-- Commons DBUtils Dependency -->
         <dependency>
             <groupId>commons-dbutils</groupId>
@@ -97,12 +91,6 @@
             <version>5.5.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- Selenium Opera Driver Dependency -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-opera-driver</artifactId>
-            <version>4.4.0</version>
-        </dependency>
     </dependencies>
 
 
@@ -112,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.5.2</version>
                 <configuration>
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                     <systemPropertyVariables>
@@ -145,7 +133,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M5</version>
+                        <version>3.5.2</version>
                         <configuration>
                             <suiteXmlFiles>
                                 <suiteXmlFile>test_suites/regression.xml</suiteXmlFile>

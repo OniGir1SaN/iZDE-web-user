@@ -1,12 +1,16 @@
 package iZDE;
 
-import com.demoqa.entities.iZDE.LoginEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.utils.ConfigReader;
+import com.izde.entities.iZDE.LoginEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.utils.ConfigReader;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+@Epic("iZDE Web")
+@Feature("Главное меню")
 public class MainMenuTest extends BaseTest {
 
     private String getFullUrl(Endpoints endpoint) {
@@ -18,12 +22,12 @@ public class MainMenuTest extends BaseTest {
         browserHelper.open(ConfigReader.getValue("baseURL") + Endpoints.SIGNIN.getEndpoint());
 
         LoginEntity entity = randomUtils.validLoginEntity();
-        loginPage.fillUpLoginForm(entity);
+        getLoginPage().fillUpLoginForm(entity);
     }
 
     @Test
     public void testClickStartButton() {
-        mainMenuPage.clickStartButton();
+        getMainMenuPage().clickStartButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.SEARCH), By.xpath("//div[@class='_contentBackground_qv3mn_6']"),
                 "Блок поисковика");
@@ -34,8 +38,8 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickSearchButton() {
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickSearchButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickSearchButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.SEARCH),
                 By.xpath("//div[@class='_contentBackground_qv3mn_6']"),
@@ -47,8 +51,8 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickTravellingButton() {
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickTravellingButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickTravellingButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.TRIPS),
                 By.xpath("//div[@class='_trips_pp0r2_1']"),
@@ -59,8 +63,8 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickSupportButton() {
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickSupportButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickSupportButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.SUPPORT),
                 By.xpath("//div[@class='_container_1nnn2_8']"),
@@ -71,7 +75,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickProfileButton() {
-        mainMenuPage.clickProfileButton();
+        getMainMenuPage().clickProfileButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.PROFILE),
                 By.xpath("//div[@class='_wrapper_1yb73_1']"),
@@ -82,7 +86,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickCellarSearchButton() {
-        mainMenuPage.clickCellarSearchButton();
+        getMainMenuPage().clickCellarSearchButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.SEARCH),
                 By.xpath("//div[@class='_contentBackground_qv3mn_6']"),
@@ -94,7 +98,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickCellarTravellingButton() {
-        mainMenuPage.clickCellarTravellingButton();
+        getMainMenuPage().clickCellarTravellingButton();
 
         webElementActions.verifyPage(getFullUrl(Endpoints.TRIPS),
                 By.xpath("//div[@class='_trips_pp0r2_1']"),
@@ -106,7 +110,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickPlayMarketButton() {
-        mainMenuPage.clickCellarPlayMarketButton();
+        getMainMenuPage().clickCellarPlayMarketButton();
 
         browserHelper.switchToNewTab();
 
@@ -122,7 +126,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickAppStoreButton() {
-        mainMenuPage.clickCellarAppStoreButton();
+        getMainMenuPage().clickCellarAppStoreButton();
 
         browserHelper.switchToNewTab();
 
@@ -138,7 +142,7 @@ public class MainMenuTest extends BaseTest {
 
     @Test
     public void testClickVendorButton() {
-        mainMenuPage.clickCellarVendorButton();
+        getMainMenuPage().clickCellarVendorButton();
 
         browserHelper.switchToNewTab();
 

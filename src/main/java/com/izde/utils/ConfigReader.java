@@ -1,0 +1,43 @@
+package com.izde.utils;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+public class ConfigReader {
+
+    private static Properties properties;
+
+    private ConfigReader(){
+        //Singleton pattern
+    }
+
+    static {
+        try{
+            String path = "src/main/resources/app.properties";
+            FileInputStream fileInputStream = new FileInputStream(path);
+            properties = new Properties();
+            properties.load(fileInputStream);
+            fileInputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getValue(String key){
+        String envKey = key.toUpperCase().replace(".", "_");
+        String envValue = System.getenv(envKey);
+        if (envValue != null && !envValue.isEmpty()) {
+            return envValue.trim();
+        }
+        return properties.getProperty(key).trim();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getValue("browser"));
+    }
+
+}

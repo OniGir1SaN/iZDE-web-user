@@ -1,14 +1,18 @@
 package iZDE.ProfileTest;
 
-import com.demoqa.entities.iZDE.LoginEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.utils.ConfigReader;
+import com.izde.entities.iZDE.LoginEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.utils.ConfigReader;
 import iZDE.BaseTest;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Epic("iZDE Web")
+@Feature("Валюта")
 public class CurrencyTest extends BaseTest {
 
     @BeforeClass
@@ -16,60 +20,60 @@ public class CurrencyTest extends BaseTest {
         browserHelper.open(ConfigReader.getValue("baseURL") + Endpoints.SIGNIN.getEndpoint());
 
         LoginEntity entity = randomUtils.validLoginEntity();
-        loginPage.fillUpLoginForm(entity);
+        getLoginPage().fillUpLoginForm(entity);
     }
 
     private void changeCurrencyIfNeeded(WebElement currencyBtn, String expectedCurrency) {
-        String initialCurrencyText = currencyPage.getCurrentCurrencyElement().getText();
+        String initialCurrencyText = getCurrencyPage().getCurrentCurrencyElement().getText();
 
         if (!initialCurrencyText.equals(expectedCurrency)) {
-            currencyPage.clickCurrencyIfNotSelected(currencyBtn);
-            currencyPage.clickSave();
-            browserHelper.waitForElementTextToBe(currencyPage.getCurrentCurrencyElement(), expectedCurrency, 10);
+            getCurrencyPage().clickCurrencyIfNotSelected(currencyBtn);
+            getCurrencyPage().clickSave();
+            browserHelper.waitForElementTextToBe(getCurrencyPage().getCurrentCurrencyElement(), expectedCurrency, 10);
         }
     }
 
     @Test(priority = 1)
     public void currencyChangeToEurTest() {
-        mainMenuPage.clickProfileButton();
-        dashboardProfilePage.clickCurrencyBtn();
+        getMainMenuPage().clickProfileButton();
+        getDashboardProfilePage().clickCurrencyBtn();
 
-        changeCurrencyIfNeeded(currencyPage.eurBtn, "Евро\nEUR");
+        changeCurrencyIfNeeded(getCurrencyPage().eurBtn, "Евро\nEUR");
 
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickSearchButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickSearchButton();
 
-        String actualDisplayedText = String.valueOf(searchPage.getEurText());
+        String actualDisplayedText = String.valueOf(getSearchPage().getEurText());
         Assert.assertTrue(actualDisplayedText.contains("€"), "Отображение валюты в поиске некорректно!");
     }
 
     @Test(priority = 2)
     public void currencyChangeToUsdTest() {
-        mainMenuPage.clickProfileButton();
-        dashboardProfilePage.clickCurrencyBtn();
-        dashboardProfilePage.clickCurrencyBtn();
+        getMainMenuPage().clickProfileButton();
+        getDashboardProfilePage().clickCurrencyBtn();
+        getDashboardProfilePage().clickCurrencyBtn();
 
-        changeCurrencyIfNeeded(currencyPage.usdBtn, "Доллар США\nUSD");
+        changeCurrencyIfNeeded(getCurrencyPage().usdBtn, "Доллар США\nUSD");
 
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickSearchButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickSearchButton();
 
-        String actualDisplayedText = String.valueOf(searchPage.getUsdText());
+        String actualDisplayedText = String.valueOf(getSearchPage().getUsdText());
         Assert.assertTrue(actualDisplayedText.contains("$"), "Отображение валюты в поиске некорректно!");
     }
 
     @Test(priority = 3)
     public void currencyChangeToKgsTest() {
-        mainMenuPage.clickProfileButton();
-        dashboardProfilePage.clickCurrencyBtn();
-        dashboardProfilePage.clickCurrencyBtn();
+        getMainMenuPage().clickProfileButton();
+        getDashboardProfilePage().clickCurrencyBtn();
+        getDashboardProfilePage().clickCurrencyBtn();
 
-        changeCurrencyIfNeeded(currencyPage.kgsBtn, "Кыргызский сом\nKGS");
+        changeCurrencyIfNeeded(getCurrencyPage().kgsBtn, "Кыргызский сом\nKGS");
 
-        mainMenuPage.clickBurgerMenu();
-        mainMenuPage.clickSearchButton();
+        getMainMenuPage().clickBurgerMenu();
+        getMainMenuPage().clickSearchButton();
 
-        String actualDisplayedText = String.valueOf(searchPage.getKgsText());
+        String actualDisplayedText = String.valueOf(getSearchPage().getKgsText());
         Assert.assertTrue(actualDisplayedText.contains("с"), "Отображение валюты в поиске некорректно!");
     }
 }

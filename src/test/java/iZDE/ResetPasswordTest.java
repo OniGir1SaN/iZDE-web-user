@@ -1,8 +1,10 @@
 package iZDE;
 
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.utils.ConfigReader;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.utils.ConfigReader;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,6 +14,8 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
+@Epic("iZDE Web")
+@Feature("Сброс пароля")
 public class ResetPasswordTest extends BaseTest {
 
     @BeforeMethod
@@ -21,37 +25,37 @@ public class ResetPasswordTest extends BaseTest {
 
     @Test
     public void testEmptyEmailError() {
-        webElementActions.click(resetPasswordPage.submitBtn);
+        webElementActions.click(getResetPasswordPage().submitBtn);
 
-        String errorMessage = resetPasswordPage.getErrorMessage();
+        String errorMessage = getResetPasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Обязательно к заполнению"),
                 "Сообщение об ошибке при пустом поле некорректно!");
     }
 
     @Test
     public void testInvalidEmailFormatError() {
-        webElementActions.sendKeys(resetPasswordPage.emailInput, "invalidEmail");
-        webElementActions.click(resetPasswordPage.submitBtn);
+        webElementActions.sendKeys(getResetPasswordPage().emailInput, "invalidEmail");
+        webElementActions.click(getResetPasswordPage().submitBtn);
 
-        String errorMessage = resetPasswordPage.getErrorMessage();
+        String errorMessage = getResetPasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Введите верный Email"),
                 "Сообщение об ошибке при некорректном формате email некорректно!");
     }
 
     @Test
     public void testUnregisteredEmailError() {
-        webElementActions.sendKeys(resetPasswordPage.emailInput, "unregistered@example.com");
-        webElementActions.click(resetPasswordPage.submitBtn);
+        webElementActions.sendKeys(getResetPasswordPage().emailInput, "unregistered@example.com");
+        webElementActions.click(getResetPasswordPage().submitBtn);
 
-        String errorMessage = resetPasswordPage.getErrorMessage();
+        String errorMessage = getResetPasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains(""),
                 "Сообщение об ошибке при незарегистрированном email некорректно!");
     }
 
     @Test
     public void testValidEmail() {
-        webElementActions.sendKeys(resetPasswordPage.emailInput, ConfigReader.getValue("login"));
-        webElementActions.click(resetPasswordPage.submitBtn);
+        webElementActions.sendKeys(getResetPasswordPage().emailInput, ConfigReader.getValue("login"));
+        webElementActions.click(getResetPasswordPage().submitBtn);
         webElementActions.waitFor(20000);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.urlContains("code"));
@@ -68,7 +72,7 @@ public class ResetPasswordTest extends BaseTest {
 
     @Test(groups = "validation")
     public void testResetPasswordPlaceholders() {
-        resetPasswordPage.verifyFormResetPasswordPlaceholders();
+        getResetPasswordPage().verifyFormResetPasswordPlaceholders();
         Allure.step("Проверка плэйсхолдера в поле email");
     }
 }

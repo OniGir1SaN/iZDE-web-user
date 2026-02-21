@@ -1,16 +1,20 @@
 package iZDE;
 
-import com.demoqa.entities.iZDE.RegisterEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.enums.iZDE.TextElementsRegister;
-import com.demoqa.utils.ConfigReader;
+import com.izde.entities.iZDE.RegisterEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.enums.iZDE.TextElementsRegister;
+import com.izde.utils.ConfigReader;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+@Epic("iZDE Web")
+@Feature("Регистрация")
 public class RegisterTest extends BaseTest {
 
     @BeforeMethod
@@ -20,10 +24,10 @@ public class RegisterTest extends BaseTest {
     }
 
     private void submitFormAndVerifyError(RegisterEntity entity, String expectedErrorMessage) {
-        registerPage.fillUpRegisterForm(entity);
-        webElementActions.click(registerPage.submitBtn);
+        getRegisterPage().fillUpRegisterForm(entity);
+        webElementActions.click(getRegisterPage().submitBtn);
 
-        String errorMessage = registerPage.getErrorMessage();
+        String errorMessage = getRegisterPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains(expectedErrorMessage),
                 "Ожидаемая ошибка: " + expectedErrorMessage + ", получено: " + errorMessage);
         Allure.step("Проверка ошибки: " + expectedErrorMessage);
@@ -40,24 +44,24 @@ public class RegisterTest extends BaseTest {
     public void testRegistrationProcess() {
         Allure.step("Начало теста регистрации");
 
-        webElementActions.click(registerPage.pcBtn);
+        webElementActions.click(getRegisterPage().pcBtn);
         Assert.assertTrue(driver.getCurrentUrl().contains("privacy-policy"),
                 "Неправильный редирект на страницу политики конфиденциальности");
         driver.navigate().back();
 
-        webElementActions.click(registerPage.ucBtn);
+        webElementActions.click(getRegisterPage().ucBtn);
         Assert.assertTrue(driver.getCurrentUrl().contains("payment-terms"),
                 "Неправильный редирект на страницу пользовательского соглашения");
         driver.navigate().back();
 
-        webElementActions.click(registerPage.poBtn);
+        webElementActions.click(getRegisterPage().poBtn);
         Assert.assertTrue(driver.getCurrentUrl().contains("public_offer"),
                 "Неправильный редирект на страницу публичной оферты");
         driver.navigate().back();
 
         RegisterEntity registerEntity = randomUtils.generateRandomRegisterEntity();
-        registerPage.fillUpRegisterForm(registerEntity);
-        webElementActions.click(registerPage.submitBtn);
+        getRegisterPage().fillUpRegisterForm(registerEntity);
+        webElementActions.click(getRegisterPage().submitBtn);
         verifySuccessfulRegistration();
     }
 
@@ -130,7 +134,7 @@ public class RegisterTest extends BaseTest {
 
     @Test(groups = "validation")
     public void testRegisterPlaceholders() {
-        registerPage.verifyFormRegisterPlaceholders();
+        getRegisterPage().verifyFormRegisterPlaceholders();
         Allure.step("Проверка плейсхолдеров полей Имя, Введите почту, Введите пароль, Повторите пароль");
     }
 

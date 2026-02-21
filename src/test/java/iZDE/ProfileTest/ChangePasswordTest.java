@@ -1,29 +1,31 @@
 package iZDE.ProfileTest;
 
-import com.demoqa.entities.iZDE.ChangePasswordEntity;
-import com.demoqa.entities.iZDE.LoginEntity;
-import com.demoqa.enums.iZDE.Endpoints;
-import com.demoqa.utils.ConfigReader;
-import com.demoqa.utils.iZDE.RandomUtils;
+import com.izde.entities.iZDE.ChangePasswordEntity;
+import com.izde.entities.iZDE.LoginEntity;
+import com.izde.enums.iZDE.Endpoints;
+import com.izde.utils.ConfigReader;
 import iZDE.BaseTest;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+@Epic("iZDE Web")
+@Feature("Смена пароля")
 public class ChangePasswordTest extends BaseTest {
 
-    private final RandomUtils randomUtils = new RandomUtils();
-    private String currentPassword = "AAAAA1!!CloseEye1";
+    private String currentPassword = ConfigReader.getValue("password");
 
     @BeforeMethod
     public void loginOnce() {
         LoginEntity loginEntity = randomUtils.validLoginEntity();
         loginEntity.setPassword(currentPassword);
         browserHelper.open(ConfigReader.getValue("baseURL") + Endpoints.SIGNIN.getEndpoint());
-        loginPage.fillUpLoginForm(loginEntity);
-        mainMenuPage.clickProfileButton();
-        privateProfilePage.clickChangePassword();
+        getLoginPage().fillUpLoginForm(loginEntity);
+        getMainMenuPage().clickProfileButton();
+        getPrivateProfilePage().clickChangePassword();
     }
 
     @Test(groups = "validation")
@@ -33,9 +35,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword("");
         entity.setRepeatNewPassword("");
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Обязательно к заполнению"),
                 "Ожидаемая ошибка: Обязательно к заполнению, получено: " + errorMessage);
     }
@@ -48,9 +50,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(shortPassword);
         entity.setRepeatNewPassword(shortPassword);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль должен содержать не менее 8 символов"),
                 "Ожидаемая ошибка: Пароль должен содержать не менее 8 символов, получено: " + errorMessage);
     }
@@ -63,9 +65,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(passwordOnlyLetters);
         entity.setRepeatNewPassword(passwordOnlyLetters);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль должен содержать хотя бы одну цифру"),
                 "Ожидаемая ошибка: Пароль должен содержать хотя бы одну цифру, получено: " + errorMessage);
     }
@@ -78,9 +80,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(passwordOnlyDigits);
         entity.setRepeatNewPassword(passwordOnlyDigits);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль должен содержать хотя бы одну букву латиницы"),
                 "Ожидаемая ошибка: Пароль должен содержать хотя бы одну букву латиницы, получено: " + errorMessage);
     }
@@ -93,9 +95,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(passwordWithoutSpecialChars);
         entity.setRepeatNewPassword(passwordWithoutSpecialChars);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль должен содержать хотя бы один специальный символ: !@#$%^&*(),.?\":{}|<>"),
                 "Ожидаемая ошибка: Пароль должен содержать хотя бы один специальный символ, получено: " + errorMessage);
     }
@@ -108,9 +110,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(passwordWithSpaces);
         entity.setRepeatNewPassword(passwordWithSpaces);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль не должен содержать пробелы"),
                 "Ожидаемая ошибка: Пароль не должен содержать пробелы, получено: " + errorMessage);
     }
@@ -122,9 +124,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword("NewPassword123!");
         entity.setRepeatNewPassword("");
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Обязательно к заполнению"),
                 "Ожидаемая ошибка: Обязательно к заполнению, получено: " + errorMessage);
     }
@@ -136,9 +138,9 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword("NewPassword123!");
         entity.setRepeatNewPassword("AnotherPassword123!");
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароли должны совпадать"),
                 "Ожидаемая ошибка: Пароли должны совпадать, получено: " + errorMessage);
     }
@@ -151,51 +153,16 @@ public class ChangePasswordTest extends BaseTest {
         entity.setNewPassword(passwordWithoutUppercase);
         entity.setRepeatNewPassword(passwordWithoutUppercase);
 
-        changePasswordPage.fillUpChangePasswordForm(entity);
+        getChangePasswordPage().fillUpChangePasswordForm(entity);
 
-        String errorMessage = changePasswordPage.getErrorMessage();
+        String errorMessage = getChangePasswordPage().getErrorMessage();
         Assert.assertTrue(errorMessage.contains("Пароль должен содержать хотя бы одну заглавную букву латиницы"),
                 "Ожидаемая ошибка: Пароль должен содержать хотя бы одну заглавную букву латиницы, получено: " + errorMessage);
     }
 
     @Test(groups = "validation")
     public void testChangePasswordPlaceholders() {
-        changePasswordPage.verifyFormChangePasswordPlaceholders();
+        getChangePasswordPage().verifyFormChangePasswordPlaceholders();
         Allure.step("Проверка плейсхолдеров полей Введите текущий пароль, Введите новый пароль, Повторите пароль");
     }
 }
-
-//    public void testChangePasswordWithValidData() {
-//        browserHelper.refreshPage();
-//        ChangePasswordEntity entity = randomUtils.generateRandomChangePasswordEntity();
-//        entity.setCurrentPassword(currentPassword);
-//
-//        changePasswordPage.fillUpChangePasswordForm(entity);
-//
-//        String successMessage = changePasswordPage.getErrorMessage();
-//        Assert.assertTrue(successMessage.isEmpty(), "Ожидаемое отсутствие ошибок, получено: " + successMessage);
-//
-//        String newPassword = entity.getNewPassword();
-//
-//
-//
-//        LoginEntity loginEntity = new LoginEntity();
-//        loginEntity.setEmail("GOku.first@proton.me");
-//        loginEntity.setPassword(newPassword);
-//        loginPage.fillUpLoginForm(loginEntity);
-//
-//        String loginSuccessMessage = privateProfilePage.getNameText();
-//        Assert.assertNotNull(loginSuccessMessage, "Не удалось авторизоваться с новым паролем!");
-//
-//        ChangePasswordEntity revertEntity = new ChangePasswordEntity();
-//        revertEntity.setCurrentPassword(newPassword);  // Старый пароль для восстановления
-//        revertEntity.setNewPassword(currentPassword);  // Восстановление исходного пароля
-//        revertEntity.setRepeatNewPassword(currentPassword);  // Повторный ввод старого пароля
-//
-//        changePasswordPage.fillUpChangePasswordForm(revertEntity);
-//
-//        String revertSuccessMessage = changePasswordPage.getErrorMessage();
-//        Assert.assertTrue(revertSuccessMessage.isEmpty(), "Ожидаемое отсутствие ошибок при восстановлении пароля!");
-//
-//        loginOnce();
-//    }

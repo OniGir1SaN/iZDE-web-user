@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression" parallel="classes" thread-count="7">
-    <test name="iZDE" verbose="2" preserve-order="true">
+
+    <test name="Auth" verbose="2" preserve-order="true">
         <classes>
-            <class name="iZDE.LoginTest"></class>
-            <class name="iZDE.MainMenuTest"></class>
-            <class name="iZDE.MainMenuTextTest"></class>
-            <class name="iZDE.ResetPasswordTest"></class>
-            <class name="iZDE.RegisterTest"></class>
-            <class name="iZDE.ProfileTest.CurrencyTest"></class>
-            <class name="iZDE.ProfileTest.LegalInformationTest"></class>
-            <class name="iZDE.ProfileTest.ChangePasswordTest"></class>
+            <class name="iZDE.LoginTest"/>
+            <class name="iZDE.RegisterTest"/>
+            <class name="iZDE.ResetPasswordTest"/>
         </classes>
     </test>
+
+    <test name="Main" verbose="2" preserve-order="true">
+        <classes>
+            <class name="iZDE.MainMenuTest"/>
+            <class name="iZDE.MainMenuTextTest"/>
+            <class name="iZDE.SearchTest"/>
+        </classes>
+    </test>
+
+    <test name="Profile" verbose="2" preserve-order="true">
+        <classes>
+            <class name="iZDE.ProfileTest.DashboardTest"/>
+            <class name="iZDE.ProfileTest.ChangeEmailTest"/>
+            <class name="iZDE.ProfileTest.ChangePasswordTest"/>
+            <class name="iZDE.ProfileTest.CurrencyTest"/>
+            <class name="iZDE.ProfileTest.LegalInformationTest"/>
+        </classes>
+    </test>
+
 </suite>
