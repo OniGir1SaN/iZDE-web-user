@@ -13,7 +13,7 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//input[@type='password']")
     public WebElement passwordInput;
 
-    @FindBy(xpath = "//p[@class='_authInputErrorText_1hc7y_49']")
+    @FindBy(xpath = "//p[@class='_authInputErrorText_1oa48_49']")
     public WebElement errorMessageElement;
 
     @FindBy(xpath = "//p[@class='errorInputMessage']")
@@ -28,10 +28,10 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement submitBtn;
 
-    @FindBy(xpath = "//h1[@class='_h1_10rpk_8']")
+    @FindBy(xpath = "//h1[@class='_h1_ip87u_8']")
     public WebElement textLogin1;
 
-    @FindBy(xpath = "//p[@class='_titleP_10rpk_14']")
+    @FindBy(xpath = "//p[@class='_titleP_ip87u_14']")
     public WebElement textLogin2;
 
     public LoginPage fillUpLoginForm(LoginEntity loginEntity) {
